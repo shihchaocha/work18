@@ -1,0 +1,26 @@
+spring.application.name: front
+server.port: 8080
+
+app:
+  product-service:
+    host: localhost
+    port: 8082
+
+---
+
+spring.config.activate.on-profile: docker
+management.zipkin.tracing.endpoint: http://zipkin-server:9411/api/v2/spans
+management.tracing.sampling.probability: 1.0
+
+logging.pattern.level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+logging:
+  level:
+    root: INFO
+    org.example: INFO
+    org.springframework.web.server.adapter.HttpWebHandlerAdapter: INFO
+
+server.port: 8080
+app:
+  product-service:
+    host: back
+    port: 8082
